@@ -1,0 +1,191 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R18
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+interface FastEthernet0/0
+ ip address 192.168.19.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+!
+interface Ethernet1/0
+ ip address 192.168.20.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+!
+interface Ethernet1/1
+ ip address 192.168.21.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+!
+interface Ethernet1/2
+ ip address 192.168.22.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+!
+interface Ethernet1/3
+ ip address 192.168.23.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+!
+interface Serial2/0
+ ip address 192.168.24.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+!
+interface Serial2/1
+ ip address 192.168.25.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+!
+interface Serial2/2
+ ip address 192.168.26.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+!
+interface Serial2/3
+ ip address 192.168.27.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 g3h4i5j6
+!
+interface FastEthernet0/0.360
+ encapsulation dot1Q 360
+ ip address 192.168.36.1 255.255.255.0
+ no shutdown
+ ip authentication mode eigrp 100 md5
+ ip authentcation key-chain eigrp 100 EIGRPKey
+ ip hello-interval eigrp 100 70
+ ip hold-time eigrp 100 400
+!
+interface FastEthernet0/0.370
+ encapsulation dot1Q 370
+ ip address 192.168.37.1 255.255.255.0
+ no shutdown
+ ip authentication mode eigrp 100 md5
+ ip authentication key-chain eigrp 100 EIGRPKey
+!
+router ospf 1
+ network 192.168.19.0 0.0.0.255 area 3
+ network 192.168.20.0 0.0.0.255 area 3
+ network 192.168.21.0 0.0.0.255 area 3
+ network 192.168.22.0 0.0.0.255 area 3
+ network 192.168.23.0 0.0.0.255 area 3
+ network 192.168.24.0 0.0.0.255 area 3
+ network 192.168.25.0 0.0.0.255 area 3
+ network 192.168.26.0 0.0.0.255 area 3
+ network 192.168.27.0 0.0.0.255 area 3
+ area 3 authentication message-digest
+!
+router eigrp 100
+ router-id 3.3.3.3
+ metric weights 0 1 1 1 1 1
+ distance eigrp 200 100
+ log-neighbor-changes
+ traffic-share balanced
+ maximum-paths 20
+ redistribute ospf 5
+!
+key chain EIGRPKey
+ key 1
+  key-string g7h8i9
+  accept-lifetime 0 infinite
+  send-lifetime 0 infinite
+!
+router rip
+ version 2
+ no auto-summary
+ network 192.168.22.0
+ network 192.168.23.0
+ redistribute connected
+ redistribute static
+ maximum-paths 5
+ distance 140
+ offset-list 80 out
+!
+interface FastEthernet0/0
+ ip address 10.0.0.8 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 10.0.1.8 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 10.0.2.8 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 10.0.3.8 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 10.0.4.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 10.0.5.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 10.0.6.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 10.0.7.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 10.0.8.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/4
+ ip address 10.0.9.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/5
+ ip address 10.0.10.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/6
+ ip address 10.0.11.8 255.255.255.0
+ no shutdown
+!
+interface Serial2/7
+ ip address 10.0.12.8 255.255.255.0
+ no shutdown
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+aaa authentication login LOCAL-CASE local-case
+aaa authorization commands 15 default group tacacs+ if-authenticated
+aaa authorization reverse-access default group tacacs+
+service password-encryption
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+ login authentication EXEC-LIST
+!
+end
+```

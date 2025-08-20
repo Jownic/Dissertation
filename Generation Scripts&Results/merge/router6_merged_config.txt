@@ -1,0 +1,265 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R6
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.66.1 255.255.255.0
+ ip ospf cost 10
+ ip ospf priority 100
+ ip ospf dead-interval 40
+ ip ospf hello-interval 10
+ ip ospf retransmit-interval 5
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+ ip address 10.0.0.6 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 192.168.67.1 255.255.255.0
+ ip ospf cost 20
+ ip ospf priority 200
+ ip ospf dead-interval 60
+ ip ospf hello-interval 15
+ ip ospf retransmit-interval 10
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+ ip address 10.0.1.6 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 192.168.68.1 255.255.255.0
+ ip ospf cost 30
+ ip ospf priority 150
+ ip ospf dead-interval 50
+ ip ospf hello-interval 20
+ ip ospf retransmit-interval 15
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+ ip address 10.0.2.6 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 192.168.69.1 255.255.255.0
+ ip ospf cost 40
+ ip ospf priority 250
+ ip ospf dead-interval 70
+ ip ospf hello-interval 25
+ ip ospf retransmit-interval 20
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+ ip address 10.0.3.6 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 192.168.70.1 255.255.255.0
+ ip ospf cost 50
+ ip ospf priority 175
+ ip ospf dead-interval 80
+ ip ospf hello-interval 30
+ ip ospf retransmit-interval 25
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+ ip address 10.0.4.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 192.168.71.1 255.255.255.0
+ ip ospf cost 60
+ ip ospf priority 125
+ ip ospf dead-interval 90
+ ip ospf hello-interval 35
+ ip ospf retransmit-interval 30
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+ ip address 10.0.5.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 192.168.72.1 255.255.255.0
+ ip ospf cost 70
+ ip ospf priority 100
+ ip ospf dead-interval 100
+ ip ospf hello-interval 40
+ ip ospf retransmit-interval 35
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+ ip address 10.0.6.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 192.168.73.1 255.255.255.0
+ ip ospf cost 80
+ ip ospf priority 90
+ ip ospf dead-interval 110
+ ip ospf hello-interval 45
+ ip ospf retransmit-interval 40
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+ ip address 10.0.7.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 192.168.74.1 255.255.255.0
+ ip ospf cost 90
+ ip ospf priority 85
+ ip ospf dead-interval 120
+ ip ospf hello-interval 50
+ ip ospf retransmit-interval 45
+ ip ospf message-digest-key 1 md5 g3h4i5j6
+ ip address 10.0.8.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/4
+ ip address 192.168.75.1 255.255.255.0
+ ip ospf cost 100
+ ip ospf priority 80
+ ip ospf dead-interval 130
+ ip ospf hello-interval 55
+ ip ospf retransmit-interval 50
+ ip ospf message-digest-key 1 md5 k7l8m9n0
+ ip address 10.0.9.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/5
+ ip address 192.168.76.1 255.255.255.0
+ ip ospf cost 110
+ ip ospf priority 75
+ ip ospf dead-interval 140
+ ip ospf hello-interval 60
+ ip ospf retransmit-interval 55
+ ip ospf message-digest-key 1 md5 o1p2q3r4
+ ip address 10.0.10.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/6
+ ip address 192.168.77.1 255.255.255.0
+ ip ospf cost 120
+ ip ospf priority 70
+ ip ospf dead-interval 150
+ ip ospf hello-interval 65
+ ip ospf retransmit-interval 60
+ ip ospf message-digest-key 1 md5 s5t6u7v8
+ ip address 10.0.11.6 255.255.255.0
+ no shutdown
+!
+interface Serial2/7
+ ip address 192.168.78.1 255.255.255.0
+ ip ospf cost 130
+ ip ospf priority 65
+ ip ospf dead-interval 160
+ ip ospf hello-interval 70
+ ip ospf retransmit-interval 65
+ ip ospf message-digest-key 1 md5 w9x0y1z2
+ ip address 10.0.12.6 255.255.255.0
+ no shutdown
+!
+interface FastEthernet0/0.125
+ encapsulation dot1Q 125
+ ip address 192.168.35.1 255.255.255.0
+!
+interface FastEthernet0/0.126
+ encapsulation dot1Q 126
+ ip address 192.168.36.1 255.255.255.0
+!
+interface FastEthernet0/0.127
+ encapsulation dot1Q 127
+ ip address 192.168.37.1 255.255.255.0
+!
+interface FastEthernet0/0.128
+ encapsulation dot1Q 128
+ ip address 192.168.38.1 255.255.255.0
+!
+interface FastEthernet0/0.129
+ encapsulation dot1Q 129
+ ip address 192.168.39.1 255.255.255.0
+!
+interface FastEthernet0/0.130
+ encapsulation dot1Q 130
+ ip address 192.168.40.1 255.255.255.0
+!
+router ospf 1
+ network 192.168.66.0 0.0.0.255 area 0
+ network 192.168.67.0 0.0.0.255 area 1
+ network 192.168.68.0 0.0.0.255 area 2
+ network 192.168.69.0 0.0.0.255 area 3
+ network 192.168.70.0 0.0.0.255 area 4
+ network 192.168.71.0 0.0.0.255 area 5
+ network 192.168.72.0 0.0.0.255 area 6
+ network 192.168.73.0 0.0.0.255 area 7
+ network 192.168.74.0 0.0.0.255 area 8
+ network 192.168.75.0 0.0.0.255 area 9
+ network 192.168.76.0 0.0.0.255 area 10
+ network 192.168.77.0 0.0.0.255 area 11
+ network 192.168.78.0 0.0.0.255 area 12
+ area 0 authentication message-digest
+ area 1 authentication message-digest
+ area 2 authentication message-digest
+ area 3 authentication message-digest
+ area 4 authentication message-digest
+ area 5 authentication message-digest
+ area 6 authentication message-digest
+ area 7 authentication message-digest
+ area 8 authentication message-digest
+ area 9 authentication message-digest
+ area 10 authentication message-digest
+ area 11 authentication message-digest
+!
+router eigrp 100
+ router-id 1.1.1.1
+ metric weights 0 1 1 1 1 1
+ distance eigrp 90 170
+ log-neighbor-warnings 12345
+ neighbor 192.168.35.2 FastEthernet0/0.125
+ neighbor 192.168.36.2 FastEthernet0/0.126
+ neighbor 192.168.37.2 FastEthernet0/0.127
+ neighbor 192.168.38.2 FastEthernet0/0.128
+ neighbor 192.168.39.2 FastEthernet0/0.129
+ neighbor 192.168.40.2 FastEthernet0/0.130
+ redistribute ospf 5
+ maximum-paths 16
+ variance 10
+ passive-interface FastEthernet0/0
+!
+router rip
+ version 2
+ network 192.168.26.0
+ redistribute connected
+ redistribute static
+ redistribute eigrp 100 metric 2
+ maximum-paths 3
+ distribute-list 60 out
+ no validate-update-source
+!
+access-list 60 permit 192.168.26.0 0.0.0.255
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+radius-server host 10.0.0.15 auth-port 1645 acct-port 1646 key 7 3f2g5h8j9k
+service password-encryption
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+ login authentication EXEC-LIST
+!
+line con 0
+ login authentication LOGIN-LIST
+!
+aaa authorization reverse-access default group tacacs+
+aaa authorization commands 15 default group tacacs+ if-authenticated
+aaa authorization config-commands
+!
+end
+```

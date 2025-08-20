@@ -1,0 +1,98 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ ip ospf hello-interval 12345
+ ip ospf dead-interval 54321
+ ip ospf cost 100
+ ip ospf retransmit-interval 30000
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+!
+interface Ethernet1/0
+ ip address 192.168.2.1 255.255.255.0
+ ip ospf hello-interval 23456
+ ip ospf dead-interval 65432
+ ip ospf cost 200
+ ip ospf retransmit-interval 40000
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+!
+interface Ethernet1/1
+ ip address 192.168.3.1 255.255.255.0
+ ip ospf hello-interval 34567
+ ip ospf dead-interval 76543
+ ip ospf cost 300
+ ip ospf retransmit-interval 50000
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+!
+interface Ethernet1/2
+ ip address 192.168.4.1 255.255.255.0
+ ip ospf hello-interval 45678
+ ip ospf dead-interval 87654
+ ip ospf cost 400
+ ip ospf retransmit-interval 60000
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+!
+interface Ethernet1/3
+ ip address 192.168.5.1 255.255.255.0
+ ip ospf hello-interval 56789
+ ip ospf dead-interval 98765
+ ip ospf cost 500
+ ip ospf retransmit-interval 10000
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+!
+interface Serial2/0
+ ip address 192.168.6.1 255.255.255.0
+ ip ospf hello-interval 67890
+ ip ospf dead-interval 12345
+ ip ospf cost 600
+ ip ospf retransmit-interval 20000
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+!
+interface Serial2/1
+ ip address 192.168.7.1 255.255.255.0
+ ip ospf hello-interval 78901
+ ip ospf dead-interval 23456
+ ip ospf cost 700
+ ip ospf retransmit-interval 30000
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+!
+interface Serial2/2
+ ip address 192.168.8.1 255.255.255.0
+ ip ospf hello-interval 89012
+ ip ospf dead-interval 34567
+ ip ospf cost 800
+ ip ospf retransmit-interval 40000
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+!
+router ospf 1
+ router-id 1.1.1.1
+ network 192.168.1.0 0.0.0.255 area 0
+ network 192.168.2.0 0.0.0.255 area 1
+ network 192.168.3.0 0.0.0.255 area 1
+ network 192.168.4.0 0.0.0.255 area 2
+ network 192.168.5.0 0.0.0.255 area 2
+ network 192.168.6.0 0.0.0.255 area 3
+ network 192.168.7.0 0.0.0.255 area 3
+ network 192.168.8.0 0.0.0.255 area 4
+ area 0 authentication message-digest
+ area 1 authentication message-digest
+ area 2 authentication message-digest
+ area 3 authentication message-digest
+ area 4 authentication message-digest
+ default-information originate always
+!
+end

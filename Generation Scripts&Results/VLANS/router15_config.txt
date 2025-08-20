@@ -1,0 +1,93 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R43
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ no ip address
+ no shutdown
+!
+interface Ethernet1/0
+ no ip address
+ no shutdown
+!
+interface Ethernet1/1
+ no ip address
+ no shutdown
+!
+interface Ethernet1/2
+ no ip address
+ no shutdown
+!
+interface Ethernet1/3
+ no ip address
+ no shutdown
+!
+interface Serial2/0
+ no ip address
+ no shutdown
+!
+interface Serial2/1
+ no ip address
+ no shutdown
+!
+interface Serial2/2
+ no ip address
+ no shutdown
+!
+interface Serial2/3
+ no ip address
+ no shutdown
+!
+interface Serial2/4
+ no ip address
+ no shutdown
+!
+interface Serial2/5
+ no ip address
+ no shutdown
+!
+interface Serial2/6
+ no ip address
+ no shutdown
+!
+interface Serial2/7
+ no ip address
+ no shutdown
+!
+interface FastEthernet0/0.179
+ encapsulation dot1Q 179
+ ip address 192.168.89.1 255.255.255.0
+!
+interface FastEthernet0/0.180
+ encapsulation dot1Q 180
+ ip address 192.168.90.1 255.255.255.0
+!
+interface FastEthernet0/0.181
+ encapsulation dot1Q 181
+ ip address 192.168.91.1 255.255.255.0
+!
+interface FastEthernet0/0.182
+ encapsulation dot1Q 182
+ ip address 192.168.92.1 255.255.255.0
+!
+interface FastEthernet0/0.183
+ encapsulation dot1Q 183
+ ip address 192.168.93.1 255.255.255.0
+!
+interface FastEthernet0/0.184
+ encapsulation dot1Q 184
+ ip address 192.168.94.1 255.255.255.0
+!
+end

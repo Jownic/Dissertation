@@ -1,0 +1,50 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 10.0.4.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 172.16.6.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 192.168.9.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+!
+router rip
+ version 2
+ network 10.0.4.0
+ network 172.16.6.0
+ network 192.168.9.0
+ network 192.168.10.0
+ passive-interface Serial2/0
+ offset-list 192.168.9.0 in 1
+ distribute-list route-map FILTER out
+ maximum-paths 2
+ redistribute eigrp 500 metric 6
+!
+route-map FILTER permit 10
+ match ip address 5
+!
+access-list 5 permit 172.16.6.0 0.0.0.255
+!
+end

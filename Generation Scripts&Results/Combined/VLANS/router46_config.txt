@@ -1,0 +1,77 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R46
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.136.1 255.255.255.0
+!
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.137.1 255.255.255.0
+!
+interface FastEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.138.1 255.255.255.0
+!
+interface Ethernet1/0
+ ip address 192.168.139.1 255.255.255.0
+!
+interface Ethernet1/1
+ ip address 192.168.140.1 255.255.255.0
+!
+interface Ethernet1/2
+ ip address 192.168.141.1 255.255.255.0
+!
+interface Ethernet1/3
+ ip address 192.168.142.1 255.255.255.0
+!
+interface Serial2/0
+ ip address 192.168.143.1 255.255.255.0
+!
+interface Serial2/1
+ ip address 192.168.144.1 255.255.255.0
+!
+interface Serial2/2
+ ip address 192.168.145.1 255.255.255.0
+!
+interface Serial2/3
+ ip address 192.168.146.1 255.255.255.0
+!
+interface Serial2/4
+ ip address 192.168.147.1 255.255.255.0
+!
+interface Serial2/5
+ ip address 192.168.148.1 255.255.255.0
+!
+interface Serial2/6
+ ip address 192.168.149.1 255.255.255.0
+!
+interface Serial2/7
+ ip address 192.168.150.1 255.255.255.0
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+!
+end

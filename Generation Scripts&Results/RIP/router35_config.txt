@@ -1,0 +1,76 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.41.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 192.168.42.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 192.168.43.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 192.168.44.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 192.168.45.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 192.168.46.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 192.168.47.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 192.168.48.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 192.168.49.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/4
+ ip address 192.168.50.1 255.255.255.0
+ no shutdown
+!
+router rip
+ version 2
+ network 192.168.41.0
+ network 192.168.42.0
+ network 192.168.43.0
+ network 192.168.44.0
+ network 192.168.45.0
+ network 192.168.46.0
+ network 192.168.47.0
+ network 192.168.48.0
+ network 192.168.49.0
+ network 192.168.50.0
+ redistribute static
+ redistribute connected
+ offset-list 192.168.41.0 in 6
+ passive-interface Ethernet1/0
+ distance 150
+ timers basic 70 210 180 270
+!
+end

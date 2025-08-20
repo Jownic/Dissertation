@@ -1,0 +1,64 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.6.1 255.255.255.0
+ no shutdown
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Serial2/0
+ ip address 192.168.7.1 255.255.255.0
+ no shutdown
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Serial2/1
+ ip address 192.168.8.1 255.255.255.0
+ no shutdown
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Serial2/2
+ ip address 192.168.9.1 255.255.255.0
+ no shutdown
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Serial2/3
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+router rip
+ version 2
+ network 192.168.6.0
+ network 192.168.7.0
+ network 192.168.8.0
+ network 192.168.9.0
+ network 192.168.10.0
+ redistribute static
+ passive-interface Serial2/0
+ passive-interface Serial2/1
+ redistribute eigrp 100 metric 2
+ timers basic 30 90 60 240
+!
+key chain RIPKey
+ key 1
+ key-string d4e5f6
+!
+end

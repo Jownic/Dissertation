@@ -1,0 +1,41 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R7
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.24.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 192.168.25.1 255.255.255.0
+ no shutdown
+!
+interface Serial2/6
+ ip address 192.168.26.1 255.255.255.0
+ no shutdown
+!
+router rip
+ version 2
+ no auto-summary
+ network 192.168.24.0
+ redistribute static
+ redistribute eigrp 100 metric 2
+ passive-interface FastEthernet0/0
+ maximum-paths 3
+ timers basic 50 150 80 220
+ offset-list 192.168.24.0 in 11
+ neighbor 192.168.25.2
+!
+end

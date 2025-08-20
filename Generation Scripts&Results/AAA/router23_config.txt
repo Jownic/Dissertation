@@ -1,0 +1,110 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 10.0.0.3 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 10.0.1.3 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 10.0.2.3 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 10.0.3.3 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 10.0.4.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 10.0.5.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 10.0.6.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 10.0.7.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 10.0.8.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/4
+ ip address 10.0.9.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/5
+ ip address 10.0.10.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/6
+ ip address 10.0.11.3 255.255.255.0
+ no shutdown
+!
+interface Serial2/7
+ ip address 10.0.12.3 255.255.255.0
+ no shutdown
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+!
+service password-encryption
+!
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+!
+line aux 0
+ login authentication LOGIN-LIST
+!
+aaa accounting system default
+aaa authorization config-commands
+banner login ^C
+Welcome to my C7200 UNAUTHORIZED ACCESS IS PROHIBITED. This device is monitored.^C
+banner failed-login ^C
+Nice try.^C
+!
+aaa authorization reverse-access default group tacacs+
+!
+end

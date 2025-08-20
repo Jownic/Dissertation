@@ -1,0 +1,40 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.7.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 192.168.8.1 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 192.168.9.1 255.255.255.0
+ no shutdown
+!
+router rip
+ version 2
+ no auto-summary
+ network 192.168.7.0
+ network 192.168.8.0
+ redistribute connected
+ redistribute static
+ maximum-paths 5
+ distance 140
+ offset-list 30 in
+!
+end

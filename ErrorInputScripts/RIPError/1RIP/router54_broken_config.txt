@@ -1,0 +1,227 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.73.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Ethernet1/0
+ ip address 192.168.74.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+!
+interface Ethernet1/1
+ ip address 192.168.75.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+!
+interface Ethernet1/2
+ ip address 192.168.76.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+!
+interface Ethernet1/3
+ ip address 192.168.77.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+!
+interface Serial2/0
+ ip address 192.168.78.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+!
+interface Serial2/1
+ ip address 192.168.79.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+!
+interface Serial2/2
+ ip address 192.168.80.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+!
+interface Serial2/3
+ ip address 192.168.81.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 g3h4i5j6
+!
+interface FastEthernet0/0.103
+ encapsulation dot1Q 103
+ ip address 192.168.31.1 255.255.255.0
+!
+interface FastEthernet0/0.203
+ encapsulation dot1Q 203
+ ip address 192.168.32.1 255.255.255.0
+!
+interface FastEthernet0/0.303
+ encapsulation dot1Q 303
+ ip address 192.168.33.1 255.255.255.0
+!
+interface FastEthernet0/0.403
+ encapsulation dot1Q 403
+ ip address 192.168.34.1 255.255.255.0
+!
+interface FastEthernet0/0.503
+ encapsulation dot1Q 503
+ ip address 192.168.35.1 255.255.255.0
+!
+interface FastEthernet0/0.603
+ encapsulation dot1Q 603
+ ip address 192.168.36.1 255.255.255.0
+!
+interface FastEthernet0/0.703
+ encapsulation dot1Q 703
+ ip address 192.168.37.1 255.255.255.0
+!
+interface FastEthernet0/0.803
+ encapsulation dot1Q 803
+ ip address 192.168.38.1 255.255.255.0
+!
+interface FastEthernet0/0.903
+ encapsulation dot1Q 903
+ ip address 192.168.39.1 255.255.255.0
+!
+interface FastEthernet0/0.1003
+ encapsulation dot1Q 1003
+ ip address 192.168.40.1 255.255.255.0
+!
+router ospf 1
+ network 192.168.73.0 0.0.0.255 area 0
+ network 192.168.74.0 0.0.0.255 area 0
+ network 192.168.75.0 0.0.0.255 area 0
+ network 192.168.76.0 0.0.0.255 area 0
+ network 192.168.77.0 0.0.0.255 area 0
+ network 192.168.78.0 0.0.0.255 area 0
+ network 192.168.79.0 0.0.0.255 area 0
+ network 192.168.80.0 0.0.0.255 area 0
+ network 192.168.81.0 0.0.0.255 area 0
+ area 0 authentication message-digest
+!
+router eigrp 100
+ eigrp log-neighbor-changes
+ eigrp log-neighbor-warnings 600
+ router-id 4.4.4.4
+ metric weights 0 1 1 1 1 1
+ distance eigrp 230 220
+ maximum-paths 25
+ variance 5
+ passive-interface Ethernet1/0
+ redistribute ospf 5
+ neighbor 192.168.31.2 FastEthernet0/0.103
+ neighbor 192.168.32.2 FastEthernet0/0.203
+ neighbor 192.168.33.2 FastEthernet0/0.303
+ neighbor 192.168.34.2 FastEthernet0/0.403
+ neighbor 192.168.35.2 FastEthernet0/0.503
+ neighbor 192.168.36.2 FastEthernet0/0.603
+ neighbor 192.168.37.2 FastEthernet0/0.703
+ neighbor 192.168.38.2 FastEthernet0/0.803
+ neighbor 192.168.39.2 FastEthernet0/0.903
+ neighbor 192.168.40.2 FastEthernet0/0.1003
+!
+ version 2
+ network 192.168.11.0
+ network 192.168.12.0
+ network 192.168.13.0
+ network 192.168.14.0
+ network 192.168.15.0
+ redistribute connected
+ timers basic 50 160 80 220
+ distance 140
+ offset-list 3 in
+ neighbor 192.168.12.2
+ neighbor 192.168.13.3
+ neighbor 192.168.14.4
+ neighbor 192.168.15.5
+!
+key chain RIPKey
+ key 1
+  key-string g7h8i9
+!
+interface FastEthernet0/0
+ ip address 10.0.0.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 10.0.1.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 10.0.2.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 10.0.3.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 10.0.4.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 10.0.5.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 10.0.6.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 10.0.7.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 10.0.8.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/4
+ ip address 10.0.9.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/5
+ ip address 10.0.10.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/6
+ ip address 10.0.11.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/7
+ ip address 10.0.12.4 255.255.255.0
+ no shutdown
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+radius-server host 10.0.0.5
+radius-server key 7hD3k9j2s1
+service password-encryption
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+ access-list 10 permit 10.0.0.0 0.0.0.255
+line con 0
+ login authentication LOGIN-LIST
+aaa authentication login LOCAL-CASE local-case
+aaa authorization reverse-access default group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa authorization commands 15 default group tacacs+ if-authenticated
+banner login "Unauthorized Access Prohibited"
+banner failed-login "Nice try"
+!
+end
+```

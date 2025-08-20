@@ -1,0 +1,157 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R24
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+interface FastEthernet0/0
+ ip address 192.168.73.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+!
+interface Ethernet1/0
+ ip address 192.168.74.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+ ip address 10.0.1.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 192.168.75.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+ ip address 10.0.2.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 192.168.76.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+ ip address 10.0.3.4 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 192.168.77.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+ ip address 10.0.4.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 192.168.78.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+ ip address 10.0.5.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 192.168.79.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+ ip address 10.0.6.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 192.168.80.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+ ip address 10.0.7.4 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 192.168.81.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 g3h4i5j6
+ ip address 10.0.8.4 255.255.255.0
+ no shutdown
+!
+interface FastEthernet0/0.480
+ encapsulation dot1Q 480
+ ip address 192.168.48.1 255.255.255.0
+ no shutdown
+ ip authentication mode eigrp 100 md5
+ ip authentication key-chain eigrp 100 EIGRPKey
+ ip hello-interval eigrp 100 40
+ ip hold-time eigrp 100 70
+!
+interface FastEthernet0/0.490
+ encapsulation dot1Q 490
+ ip address 192.168.49.1 255.255.255.0
+ no shutdown
+!
+router ospf 1
+ network 192.168.73.0 0.0.0.255 area 9
+ network 192.168.74.0 0.0.0.255 area 9
+ network 192.168.75.0 0.0.0.255 area 9
+ network 192.168.76.0 0.0.0.255 area 9
+ network 192.168.77.0 0.0.0.255 area 9
+ network 192.168.78.0 0.0.0.255 area 9
+ network 192.168.79.0 0.0.0.255 area 9
+ network 192.168.80.0 0.0.0.255 area 9
+ network 192.168.81.0 0.0.0.255 area 9
+ area 9 authentication message-digest
+!
+router eigrp 100
+ router-id 4.4.4.4
+ metric weights 0 1 1 1 1 1
+ distance eigrp 250 300
+ log-neighbor-changes
+ neighbor 192.168.48.2 FastEthernet0/0.480
+ neighbor 192.168.49.2 FastEthernet0/0.490
+!
+router rip
+ version 2
+ no auto-summary
+ network 192.168.15.0
+ redistribute static
+ redistribute eigrp 100 metric 2
+ passive-interface Ethernet1/0
+ maximum-paths 2
+ timers basic 60 180 90 240
+ offset-list 192.168.15.0 out 8
+ neighbor 192.168.16.2
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+!
+service password-encryption
+!
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+!
+line aux 0
+ login authentication LOGIN-LIST
+!
+aaa accounting system default
+aaa authorization config-commands
+banner login ^C
+Welcome to my C7200 UNAUTHORIZED ACCESS IS PROHIBITED. This device is monitored.^C
+banner failed-login ^C
+Nice try.^C
+!
+aaa authorization reverse-access default group tacacs+
+!
+end
+```

@@ -1,0 +1,76 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R10
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+interface FastEthernet0/0
+ ip address 192.168.1.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 a0b1c2d3
+!
+interface Ethernet1/0
+ ip address 192.168.2.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 e6f7g8h9
+!
+interface Ethernet1/1
+ ip address 192.168.3.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 i1j2k3l4
+!
+interface Ethernet1/2
+ ip address 192.168.4.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 m5n6o7p8
+!
+interface Ethernet1/3
+ ip address 192.168.5.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 q9r0s1t2
+!
+interface Serial2/0
+ ip address 192.168.6.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 u3v4w5x6
+!
+interface Serial2/1
+ ip address 192.168.7.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 y7z8a9b0
+!
+interface Serial2/2
+ ip address 192.168.8.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 c1d2e3f4
+!
+interface Serial2/3
+ ip address 192.168.9.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 g5h6i7j8
+!
+router ospf 10
+ network 192.168.1.0 0.0.0.255 area 10
+ network 192.168.2.0 0.0.0.255 area 10
+ network 192.168.3.0 0.0.0.255 area 10
+ network 192.168.4.0 0.0.0.255 area 10
+ network 192.168.5.0 0.0.0.255 area 10
+ network 192.168.6.0 0.0.0.255 area 10
+ network 192.168.7.0 0.0.0.255 area 10
+ network 192.168.8.0 0.0.0.255 area 10
+ network 192.168.9.0 0.0.0.255 area 10
+ area 10 authentication message-digest
+!
+end

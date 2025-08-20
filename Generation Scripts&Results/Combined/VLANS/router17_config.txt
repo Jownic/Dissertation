@@ -1,0 +1,75 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R45
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ no ip address
+ no shutdown
+!
+interface Ethernet1/0
+ no ip address
+ no shutdown
+!
+interface Ethernet1/1
+ no ip address
+ no shutdown
+!
+interface Ethernet1/2
+ no ip address
+ no shutdown
+!
+interface Ethernet1/3
+ no ip address
+ no shutdown
+!
+interface Serial2/0
+ no ip address
+ no shutdown
+!
+interface Serial2/1
+ no ip address
+ no shutdown
+!
+interface Serial2/2
+ no ip address
+ no shutdown
+!
+interface Serial2/3
+ no ip address
+ no shutdown
+!
+interface Serial2/4
+ no ip address
+ no shutdown
+!
+interface Serial2/5
+ no ip address
+ no shutdown
+!
+interface Serial2/6
+ no ip address
+ no shutdown
+!
+interface Serial2/7
+ no ip address
+ no shutdown
+!
+interface FastEthernet0/0.191
+ encapsulation dot1Q 191
+ ip address 192.168.101.1 255.255.255.0
+!
+interface FastEthernet0/0.192
+ encapsulation dot1Q 192
+ ip address 192.168.102.1 255.255.255

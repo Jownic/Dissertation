@@ -1,0 +1,64 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R18
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ no ip address
+!
+interface Ethernet1/0
+ no ip address
+!
+interface Ethernet1/1
+ no ip address
+!
+interface Ethernet1/2
+ no ip address
+!
+interface Ethernet1/3
+ no ip address
+!
+interface Serial2/0
+ no ip address
+!
+interface Serial2/1
+ no ip address
+!
+interface Serial2/2
+ no ip address
+!
+interface Serial2/3
+ no ip address
+!
+interface Serial2/4
+ no ip address
+!
+interface Serial2/5
+ no ip address
+!
+interface Serial2/6
+ no ip address
+!
+interface Serial2/7
+ no ip address
+!
+interface FastEthernet0/0.360
+ encapsulation dot1Q 360
+ ip address 192.168.36.1 255.255.255.0
+!
+interface FastEthernet0/0.370
+ encapsulation dot1Q 370
+ ip address 192.168.37.1 255.255.255.0
+!
+end

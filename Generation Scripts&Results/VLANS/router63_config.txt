@@ -1,0 +1,57 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0.301
+ encapsulation dot1Q 301
+ ip address 192.168.21.1 255.255.255.0
+!
+interface FastEthernet0/0.302
+ encapsulation dot1Q 302
+ ip address 192.168.22.1 255.255.255.0
+!
+interface FastEthernet0/0.303
+ encapsulation dot1Q 303
+ ip address 192.168.23.1 255.255.255.0
+!
+interface FastEthernet0/0.304
+ encapsulation dot1Q 304
+ ip address 192.168.24.1 255.255.255.0
+!
+interface FastEthernet0/0.305
+ encapsulation dot1Q 305
+ ip address 192.168.25.1 255.255.255.0
+!
+interface FastEthernet0/0.306
+ encapsulation dot1Q 306
+ ip address 192.168.26.1 255.255.255.0
+!
+interface FastEthernet0/0.307
+ encapsulation dot1Q 307
+ ip address 192.168.27.1 255.255.255.0
+!
+interface FastEthernet0/0.308
+ encapsulation dot1Q 308
+ ip address 192.168.28.1 255.255.255.0
+!
+interface FastEthernet0/0.309
+ encapsulation dot1Q 309
+ ip address 192.168.29.1 255.255.255.0
+!
+interface FastEthernet0/0.310
+ encapsulation dot1Q 310
+ ip address 192.168.30.1 255.255.255.0
+!
+end

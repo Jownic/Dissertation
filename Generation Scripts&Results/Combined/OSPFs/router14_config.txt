@@ -1,0 +1,90 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R4
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.22.1 255.255.255.0
+ ip ospf cost 100
+ ip ospf dead-interval 2500
+ ip ospf hello-interval 1500
+ ip ospf retransmit-interval 5000
+ ip ospf priority 50
+ ip ospf lls
+!
+interface Ethernet1/0
+ ip address 192.168.23.1 255.255.255.0
+ ip ospf cost 200
+ ip ospf dead-interval 3000
+ ip ospf hello-interval 2000
+ ip ospf retransmit-interval 6000
+ ip ospf priority 100
+ ip ospf lls
+!
+interface Ethernet1/1
+ ip address 192.168.24.1 255.255.255.0
+ ip ospf cost 300
+ ip ospf dead-interval 3500
+ ip ospf hello-interval 2500
+ ip ospf retransmit-interval 7000
+ ip ospf priority 150
+ ip ospf lls
+!
+interface Ethernet1/2
+ ip address 192.168.25.1 255.255.255.0
+ ip ospf cost 400
+ ip ospf dead-interval 4000
+ ip ospf hello-interval 3000
+ ip ospf retransmit-interval 8000
+ ip ospf priority 200
+ ip ospf lls
+!
+interface Ethernet1/3
+ ip address 192.168.26.1 255.255.255.0
+ ip ospf cost 500
+ ip ospf dead-interval 4500
+ ip ospf hello-interval 3500
+ ip ospf retransmit-interval 9000
+ ip ospf priority 255
+ ip ospf lls
+!
+interface Serial2/0
+ ip address 192.168.27.1 255.255.255.0
+ ip ospf cost 600
+ ip ospf dead-interval 5000
+ ip ospf hello-interval 4000
+ ip ospf retransmit-interval 10000
+ ip ospf priority 100
+ ip ospf lls
+!
+interface Serial2/1
+ ip address 192.168.28.1 255.255.255.0
+ ip ospf cost 700
+ ip ospf dead-interval 5500
+ ip ospf hello-interval 4500
+ ip ospf retransmit-interval 11000
+ ip ospf priority 150
+ ip ospf lls
+!
+router ospf 4
+ network 192.168.22.0 0.0.0.255 area 1
+ network 192.168.23.0 0.0.0.255 area 1
+ network 192.168.24.0 0.0.0.255 area 1
+ network 192.168.25.0 0.0.0.255 area 1
+ network 192.168.26.0 0.0.0.255 area 1
+ network 192.168.27.0 0.0.0.255 area 1
+ network 192.168.28.0 0.0.0.255 area 1
+ area 1 nssa translate type7 always
+!
+end

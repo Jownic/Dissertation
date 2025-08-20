@@ -1,0 +1,45 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R3
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.5.1 255.255.255.0
+ no shutdown
+ ip hold-time eigrp 123 50000
+ ip hello-interval eigrp 123 25000
+ ip authentication mode eigrp 123 md5
+ ip authentication key-chain eigrp 123 EIGRPKey
+!
+interface FastEthernet0/1
+ ip address 192.168.6.1 255.255.255.0
+ no shutdown
+ ip hold-time eigrp 123 60000
+ ip hello-interval eigrp 123 35000
+ ip authentication mode eigrp 123 md5
+ ip authentication key-chain eigrp 123 EIGRPKey
+!
+router eigrp 123
+ router-id 3.3.3.3
+ metric weights 0 1 1 1 1 1
+ distance eigrp 200 100
+ maximum-paths 20
+ variance 15
+ traffic-share balanced
+ eigrp stub
+ neighbor 192.168.5.2 FastEthernet0/0
+ neighbor 192.168.6.2 FastEthernet0/1
+ log-neighbor-warnings 400
+!
+end

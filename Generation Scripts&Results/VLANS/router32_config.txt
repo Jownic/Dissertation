@@ -1,0 +1,149 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R32
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ no ip address
+ no shutdown
+!
+interface Ethernet1/0
+ no ip address
+ no shutdown
+!
+interface Ethernet1/1
+ no ip address
+ no shutdown
+!
+interface Ethernet1/2
+ no ip address
+ no shutdown
+!
+interface Ethernet1/3
+ no ip address
+ no shutdown
+!
+interface Serial2/0
+ no ip address
+ no shutdown
+!
+interface Serial2/1
+ no ip address
+ no shutdown
+!
+interface Serial2/2
+ no ip address
+ no shutdown
+!
+interface Serial2/3
+ no ip address
+ no shutdown
+!
+interface Serial2/4
+ no ip address
+ no shutdown
+!
+interface Serial2/5
+ no ip address
+ no shutdown
+!
+interface Serial2/6
+ no ip address
+ no shutdown
+!
+interface Serial2/7
+ no ip address
+ no shutdown
+!
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.61.1 255.255.255.0
+!
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.62.1 255.255.255.0
+!
+interface FastEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.63.1 255.255.255.0
+!
+interface FastEthernet0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.64.1 255.255.255.0
+!
+interface FastEthernet0/0.50
+ encapsulation dot1Q 50
+ ip address 192.168.65.1 255.255.255.0
+!
+interface FastEthernet0/0.60
+ encapsulation dot1Q 60
+ ip address 192.168.66.1 255.255.255.0
+!
+interface FastEthernet0/0.70
+ encapsulation dot1Q 70
+ ip address 192.168.67.1 255.255.255.0
+!
+interface FastEthernet0/0.80
+ encapsulation dot1Q 80
+ ip address 192.168.68.1 255.255.255.0
+!
+interface FastEthernet0/0.90
+ encapsulation dot1Q 90
+ ip address 192.168.69.1 255.255.255.0
+!
+interface FastEthernet0/0.100
+ encapsulation dot1Q 100
+ ip address 192.168.70.1 255.255.255.0
+!
+interface FastEthernet0/0.110
+ encapsulation dot1Q 110
+ ip address 192.168.71.1 255.255.255.0
+!
+interface FastEthernet0/0.120
+ encapsulation dot1Q 120
+ ip address 192.168.72.1 255.255.255.0
+!
+interface FastEthernet0/0.130
+ encapsulation dot1Q 130
+ ip address 192.168.73.1 255.255.255.0
+!
+interface FastEthernet0/0.140
+ encapsulation dot1Q 140
+ ip address 192.168.74.1 255.255.255.0
+!
+interface FastEthernet0/0.150
+ encapsulation dot1Q 150
+ ip address 192.168.75.1 255.255.255.0
+!
+interface FastEthernet0/0.160
+ encapsulation dot1Q 160
+ ip address 192.168.76.1 255.255.255.0
+!
+interface FastEthernet0/0.170
+ encapsulation dot1Q 170
+ ip address 192.168.77.1 255.255.255.0
+!
+interface FastEthernet0/0.180
+ encapsulation dot1Q 180
+ ip address 192.168.78.1 255.255.255.0
+!
+interface FastEthernet0/0.190
+ encapsulation dot1Q 190
+ ip address 192.168.79.1 255.255.255.0
+!
+interface FastEthernet0/0.200
+ encapsulation dot1Q 200
+ ip address 192.168.80.1 255.255.255.0
+!
+end

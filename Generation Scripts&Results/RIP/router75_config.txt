@@ -1,0 +1,70 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ no shutdown
+ ip address 192.168.21.1 255.255.255.0
+ ip rip send version 2
+ ip rip receive version 2
+ ip rip authentication key-chain rip-auth
+ ip rip authentication mode md5
+!
+interface Ethernet1/0
+ no shutdown
+ ip address 192.168.22.1 255.255.255.0
+ ip rip send version 2
+ ip rip receive version 2
+!
+interface Ethernet1/1
+ no shutdown
+ ip address 192.168.23.1 255.255.255.0
+ ip rip send version 2
+ ip rip receive version 2
+!
+interface Serial2/0
+ no shutdown
+ ip address 192.168.24.1 255.255.255.0
+ ip rip send version 2
+ ip rip receive version 2
+!
+interface Serial2/1
+ no shutdown
+ ip address 192.168.25.1 255.255.255.0
+ ip rip send version 2
+ ip rip receive version 2
+!
+router rip
+ version 2
+ network 192.168.21.0
+ network 192.168.22.0
+ network 192.168.23.0
+ network 192.168.24.0
+ network 192.168.25.0
+ no auto-summary
+ distribute-list route-map rip-filter in
+ redistribute eigrp 100 metric 2
+ redistribute ospf 1 metric 2
+!
+key chain rip-auth
+ key 1
+  key-string cisco123
+!
+route-map rip-filter deny 10
+ match ip address 1
+!
+access-list 1 permit 192.168.21.0 0.0.0.255
+!
+end

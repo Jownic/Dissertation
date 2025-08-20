@@ -1,0 +1,253 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R35
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+interface FastEthernet0/0
+ ip address 192.168.1.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 a0b1c2d3
+ ip address 10.0.0.5 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 192.168.2.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 e6f7g8h9
+ ip address 10.0.1.5 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/1
+ ip address 192.168.3.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 i1j2k3l4
+ ip address 10.0.2.5 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/2
+ ip address 192.168.4.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 m5n6o7p8
+ ip address 10.0.3.5 255.255.255.0
+ no shutdown
+!
+interface Ethernet1/3
+ ip address 192.168.5.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 q9r0s1t2
+ ip address 10.0.4.5 255.255.255.0
+ no shutdown
+!
+interface Serial2/0
+ ip address 192.168.6.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 u3v4w5x6
+ ip address 10.0.5.5 255.255.255.0
+ no shutdown
+!
+interface Serial2/1
+ ip address 192.168.7.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 y7z8a9b0
+ ip address 10.0.6.5 255.255.255.0
+ no shutdown
+!
+interface Serial2/2
+ ip address 192.168.8.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 c1d2e3f4
+ ip address 10.0.7.5 255.255.255.0
+ no shutdown
+!
+interface Serial2/3
+ ip address 192.168.9.10 255.255.255.0
+ ip ospf message-digest-key 1 md5 g5h6i7j8
+ ip address 10.0.8.5 255.255.255.0
+ no shutdown
+!
+interface Serial2/4
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+ ip hello-interval eigrp 100 15000
+ ip hold-time eigrp 100 25000
+!
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.121.1 255.255.255.0
+!
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.122.1 255.255.255.0
+!
+interface FastEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.123.1 255.255.255.0
+!
+interface FastEthernet0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.124.1 255.255.255.0
+!
+interface FastEthernet0/0.50
+ encapsulation dot1Q 50
+ ip address 192.168.125.1 255.255.255.0
+!
+interface FastEthernet0/0.60
+ encapsulation dot1Q 60
+ ip address 192.168.126.1 255.255.255.0
+!
+interface FastEthernet0/0.70
+ encapsulation dot1Q 70
+ ip address 192.168.127.1 255.255.255.0
+!
+interface FastEthernet0/0.80
+ encapsulation dot1Q 80
+ ip address 192.168.128.1 255.255.255.0
+!
+interface FastEthernet0/0.90
+ encapsulation dot1Q 90
+ ip address 192.168.129.1 255.255.255.0
+!
+interface FastEthernet0/0.100
+ encapsulation dot1Q 100
+ ip address 192.168.130.1 255.255.255.0
+!
+interface FastEthernet0/0.110
+ encapsulation dot1Q 110
+ ip address 192.168.131.1 255.255.255.0
+!
+interface FastEthernet0/0.120
+ encapsulation dot1Q 120
+ ip address 192.168.132.1 255.255.255.0
+!
+interface FastEthernet0/0.130
+ encapsulation dot1Q 130
+ ip address 192.168.133.1 255.255.255.0
+!
+interface FastEthernet0/0.140
+ encapsulation dot1Q 140
+ ip address 192.168.134.1 255.255.255.0
+!
+interface FastEthernet0/0.150
+ encapsulation dot1Q 150
+ ip address 192.168.135.1 255.255.255.0
+!
+interface FastEthernet0/0.160
+ encapsulation dot1Q 160
+ ip address 192.168.136.1 255.255.255.0
+!
+interface FastEthernet0/0.170
+ encapsulation dot1Q 170
+ ip address 192.168.137.1 255.255.255.0
+!
+interface FastEthernet0/0.180
+ encapsulation dot1Q 180
+ ip address 192.168.138.1 255.255.255.0
+!
+interface FastEthernet0/0.190
+ encapsulation dot1Q 190
+ ip address 192.168.139.1 255.255.255.0
+!
+interface FastEthernet0/0.200
+ encapsulation dot1Q 200
+ ip address 192.168.140.1 255.255.255.0
+!
+routr ospf 10
+ network 192.168.1.0 0.0.0.255 area 10
+ network 192.168.2.0 0.0.0.255 area 10
+ network 192.168.3.0 0.0.0.255 area 10
+ network 192.168.4.0 0.0.0.255 area 10
+ network 192.168.5.0 0.0.0.255 area 10
+ network 192.168.6.0 0.0.0.255 area 10
+ network 192.168.7.0 0.0.0.255 area 10
+ network 192.168.8.0 0.0.0.255 area 10
+ network 192.168.9.0 0.0.0.255 area 10
+ area 10 authentication message-digest
+!
+router eigrp 100
+ router-id 5.5.5.5
+ metric weights 0 1 1 1 1 1
+ distance eigrp 230 170
+ redistribute ospf 5
+ passive-interface Ethernet1/3
+ maximum-paths 30
+ variance 7
+ eigrp log-neighbor-changes
+ neighbor 192.168.9.2 Ethernet1/3
+ neighbor 192.168.10.2 Serial2/4
+ neighbor 192.168.9.3 Ethernet1/3
+ neighbor 192.168.10.3 Serial2/4
+!
+router rip
+ version 2
+ network 192.168.41.0
+ network 192.168.42.0
+ network 192.168.43.0
+ network 192.168.44.0
+ network 192.168.45.0
+ network 192.168.46.0
+ network 192.168.47.0
+ network 192.168.48.0
+ network 192.168.49.0
+ network 192.168.50.0
+ redistribute static
+ redistribute connected
+ offset-list 192.168.41.0 in 6
+ passive-interface Ethernet1/0
+ distance 150
+ timers basic 70 210 180 270
+!
+interface Serial2/5
+ no ip address
+ no shutdown
+!
+interface Serial2/6
+ no ip address
+ no shutdown
+!
+interface Serial2/7
+ no ip address
+ no shutdown
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+!
+service password-encryption
+!
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+!
+access-list 10 permit 10.0.0.0 0.0.0.255
+!
+line aux 0
+ login authentication LOGIN-LIST
+!
+aaa authorization config-commands
+aaa authorization commands 15 default group tacacs+ if-authenticated
+aaa authentication login LOCAL-CASE local-case
+!
+end
+```

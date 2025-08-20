@@ -1,0 +1,117 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R7
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+line aux 0
+ exec-timeout 0 0
+ logging synchronous
+ privilege level 15
+ no login
+!
+router ospf 1
+ network 192.168.60.0 0.0.0.255 area 1
+ network 192.168.61.0 0.0.0.255 area 1
+ network 192.168.62.0 0.0.0.255 area 2
+ network 192.168.63.0 0.0.0.255 area 2
+ network 192.168.64.0 0.0.0.255 area 3
+ network 192.168.65.0 0.0.0.255 area 3
+ area 1 authentication message-digest
+ area 2 authentication message-digest
+ area 3 authentication message-digest
+ default-information originate always
+ redistribute rip subnets
+ area 1 nssa translate type7 always
+ area 2 stub
+ area 3 totally-stub
+ auto-cost reference-bandwidth 1000000
+!
+interface FastEthernet0/0
+ ip address 192.168.60.1 255.255.255.0
+ ip ospf hello-interval 2000
+ ip ospf dead-interval 8000
+ ip ospf retransmit-interval 100
+ ip ospf cost 100
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+!
+interface Ethernet1/0
+ ip address 192.168.61.1 255.255.255.0
+ ip ospf hello-interval 3000
+ ip ospf dead-interval 12000
+ ip ospf retransmit-interval 200
+ ip ospf cost 200
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+!
+interface Ethernet1/1
+ ip address 192.168.62.1 255.255.255.0
+ ip ospf hello-interval 4000
+ ip ospf dead-interval 16000
+ ip ospf retransmit-interval 300
+ ip ospf cost 300
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+!
+interface Ethernet1/2
+ ip address 192.168.63.1 255.255.255.0
+ ip ospf hello-interval 5000
+ ip ospf dead-interval 20000
+ ip ospf retransmit-interval 400
+ ip ospf cost 400
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+!
+interface Ethernet1/3
+ ip address 192.168.64.1 255.255.255.0
+ ip ospf hello-interval 6000
+ ip ospf dead-interval 24000
+ ip ospf retransmit-interval 500
+ ip ospf cost 500
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+!
+interface Serial2/0
+ ip address 192.168.65.1 255.255.255.0
+ ip ospf hello-interval 7000
+ ip ospf dead-interval 28000
+ ip ospf retransmit-interval 600
+ ip ospf cost 600
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+!
+interface Serial2/1
+ ip address 192.168.66.1 255.255.255.0
+ ip ospf hello-interval 8000
+ ip ospf dead-interval 32000
+ ip ospf retransmit-interval 700
+ ip ospf cost 700
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+!
+interface Serial2/2
+ ip address 192.168.67.1 255.255.255.0
+ ip ospf hello-interval 9000
+ ip ospf dead-interval 36000
+ ip ospf retransmit-interval 800
+ ip ospf cost 800
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+!
+interface Serial2/3
+ ip address 192.168.68.1 255.255.255.0
+ ip ospf hello-interval 10000
+ ip ospf dead-interval 40000
+ ip ospf retransmit-interval 900
+ ip ospf cost 900
+ ip ospf message-digest-key 1 md5 g3h4i5j6
+!
+end

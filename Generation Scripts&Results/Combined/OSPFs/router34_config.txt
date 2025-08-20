@@ -1,0 +1,49 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R4
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.11.1 255.255.255.0
+ ip ospf hello-interval 60000
+ ip ospf retransmit-interval 40000
+ ip ospf cost 400
+ ip ospf lls
+!
+interface Ethernet1/2
+ ip address 192.168.12.1 255.255.255.0
+ ip ospf hello-interval 50000
+ ip ospf retransmit-interval 30000
+ ip ospf cost 500
+ ip ospf lls
+!
+interface Serial2/3
+ ip address 192.168.13.1 255.255.255.0
+ ip ospf hello-interval 10000
+ ip ospf retransmit-interval 20000
+ ip ospf cost 600
+ ip ospf lls
+!
+router ospf 1
+ router-id 4.4.4.4
+ network 192.168.11.0 0.0.0.255 area 0
+ network 192.168.12.0 0.0.0.255 area 1
+ network 192.168.13.0 0.0.0.255 area 1
+ passive-interface FastEthernet0/0
+ auto-cost reference-bandwidth 4000000
+ area 1 authentication message-digest
+ timers throttle spf 4000 20000 60000
+ redistribute rip subnets
+!
+end

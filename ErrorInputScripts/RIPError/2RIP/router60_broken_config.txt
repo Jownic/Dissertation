@@ -1,0 +1,177 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.37.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 a1B2c3D4
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Ethernet1/0
+ ip address 192.168.38.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 e5F6g7H8
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Ethernet1/1
+ ip address 192.168.39.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 i9J0k1L2
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Ethernet1/2
+ ip address 192.168.40.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 m3N4o5P6
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Ethernet1/3
+ ip address 192.168.41.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 q7R8s9T0
+ ip rip authentication mode md5
+ ip rip authentication key-chain RIPKey
+!
+interface Serial2/0
+ ip address 192.168.42.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 u1V2w3X4
+!
+interface Serial2/1
+ ip address 192.168.43.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 y5Z6a7B8
+!
+interface Serial2/2
+ ip address 192.168.44.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 c9D0e1F2
+!
+interface Serial2/3
+ ip address 192.168.45.1 255.255.255.0
+ ip ospf message-digest-key 1 md5 g3H4i5J6
+!
+interface FastEthernet0/0.109
+ encapsulation dot1Q 109
+ ip address 192.168.91.1 255.255.255.0
+!
+interface FastEthernet0/0.209
+ encapsulation dot1Q 209
+ ip address 192.168.92.1 255.255.255.0
+!
+interface FastEthernet0/0.309
+ encapsulation dot1Q 309
+ ip address 192.168.93.1 255.255.255.0
+!
+interface FastEthernet0/0.409
+ encapsulation dot1Q 409
+ ip address 192.168.94.1 255.255.255.0
+!
+interface FastEthernet0/0.509
+ encapsulation dot1Q 509
+ ip address 192.168.95.1 255.255.255.0
+!
+interface FastEthernet0/0.609
+ encapsulation dot1Q 609
+ ip address 192.168.96.1 255.255.255.0
+!
+interface FastEthernet0/0.709
+ encapsulation dot1Q 709
+ ip address 192.168.97.1 255.255.255.0
+!
+interface FastEthernet0/0.809
+ encapsulation dot1Q 809
+ ip address 192.168.98.1 255.255.255.0
+!
+interface FastEthernet0/0.909
+ encapsulation dot1Q 909
+ ip address 192.168.99.1 255.255.255.0
+!
+interface FastEthernet0/0.1009
+ encapsulation dot1Q 1009
+ ip address 192.168.100.1 255.255.255.0
+!
+router ospf 1
+ router-id 192.168.37.1
+ area 0 authentication message-digest
+ network 192.168.37.0 0.0.0.255 area 0
+ network 192.168.38.0 0.0.0.255 area 0
+ network 192.168.39.0 0.0.0.255 area 0
+ network 192.168.40.0 0.0.0.255 area 0
+ network 192.168.41.0 0.0.0.255 area 0
+ network 192.168.42.0 0.0.0.255 area 0
+ network 192.168.43.0 0.0.0.255 area 0
+ network 192.168.44.0 0.0.0.255 area 0
+ network 192.168.45.0 0.0.0.255 area 0
+!
+router eigrp 100
+ eigrp log-neighbor-changes
+ eigrp log-neighbor-warnings 700
+ router-id 5.5.5.5
+ metric weights 0 1 1 1 1 1
+ distance eigrp 300 350
+ maximum-paths 30
+ variance 25
+ passive-interface Ethernet1/4
+ neighbor 192.168.9.2 FastEthernet0/0.109
+ neighbor 192.168.9.3 FastEthernet0/0.109
+ neighbor 192.168.10.2 Ethernet1/4
+ neighbor 192.168.10.3 Ethernet1/4
+!
+interface Ethernet1/4
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+ ip hello-interval eigrp 100 55000
+ ip hold-time eigrp 100 65000
+!
+ version 2
+ network 192.168.16.0
+ network 192.168.17.0
+ redistribute connected
+ redistribute static
+ no auto-summary
+ distribute-list 15 out
+ offset-list 16 in 2
+!
+key chain RIPKey
+ key 1
+  key-string j0k1l2
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+radius-server host 10.0.0.11
+radius-server key 7hD3k9j2s1
+service password-encryption
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+ access-list 10 permit 10.0.0.0 0.0.0.255
+line con 0
+ login authentication LOGIN-LIST
+aaa authentication login LOCAL-CASE local-case
+aaa authorization reverse-access default group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa authorization commands 15 default group tacacs+ if-authenticated
+banner login "Unauthorized Access Prohibited"
+banner failed-login "Nice try"
+!
+end
+```

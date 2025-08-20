@@ -1,0 +1,42 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R4
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.7.1 255.255.255.0
+ no shutdown
+ ip hello-interval eigrp 100 180
+ ip hold-time eigrp 100 360
+!
+interface Ethernet1/3
+ ip address 192.168.8.1 255.255.255.0
+ no shutdown
+!
+router eigrp 100
+ router-id 4.4.4.4
+ metric weights 0 1 1 1 1 1
+ distance eigrp 20 200
+ passive-interface Ethernet1/3
+ log-neighbor-warnings 22222
+ maximum-paths 25
+ variance 30
+ eigrp log-neighbor-changes
+ neighbor 192.168.7.2 FastEthernet0/0
+ neighbor 192.168.7.3 FastEthernet0/0
+ neighbor 192.168.7.4 FastEthernet0/0
+ neighbor 192.168.7.5 FastEthernet0/0
+ redistribute ospf 4
+!
+end

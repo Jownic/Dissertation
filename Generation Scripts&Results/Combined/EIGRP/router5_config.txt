@@ -1,0 +1,44 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R5
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.9.1 255.255.255.0
+ no shutdown
+ ip hello-interval eigrp 100 50
+ ip hold-time eigrp 100 1000
+!
+interface Serial2/0
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+ ip hello-interval eigrp 100 55
+ ip hold-time eigrp 100 1100
+!
+router eigrp 100
+ router-id 5.5.5.5
+ metric weights 0 1 1 1 1 1
+ distance eigrp 240 210
+ eigrp log-neighbor-changes
+ eigrp log-neighbor-warnings 700
+ maximum-paths 30
+ eigrp stub receive-only
+ passive-interface FastEthernet0/0
+ redistribute ospf 9
+ neighbor 192.168.9.2 FastEthernet0/0
+ neighbor 192.168.9.3 Serial2/0
+ neighbor 192.168.10.2 Serial2/0
+ neighbor 192.168.10.3 FastEthernet0/0
+!
+end

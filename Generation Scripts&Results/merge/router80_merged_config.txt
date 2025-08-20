@@ -1,0 +1,192 @@
+```
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R1
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.33.1 255.255.255.0
+ ip ospf hello-interval 13579
+ ip ospf dead-interval 97531
+ ip ospf cost 3300
+ ip ospf retransmit-interval 15000
+ ip ospf message-digest-key 1 md5 a1b2c3d4
+!
+interface Ethernet1/0
+ ip address 192.168.34.1 255.255.255.0
+ ip ospf hello-interval 24680
+ ip ospf dead-interval 86420
+ ip ospf cost 3400
+ ip ospf retransmit-interval 25000
+ ip ospf message-digest-key 1 md5 e5f6g7h8
+!
+interface Ethernet1/1
+ ip address 192.168.35.1 255.255.255.0
+ ip ospf hello-interval 35791
+ ip ospf dead-interval 75319
+ ip ospf cost 3500
+ ip ospf retransmit-interval 35000
+ ip ospf message-digest-key 1 md5 i9j0k1l2
+!
+interface Ethernet1/2
+ ip address 192.168.36.1 255.255.255.0
+ ip ospf hello-interval 46802
+ ip ospf dead-interval 64218
+ ip ospf cost 3600
+ ip ospf retransmit-interval 45000
+ ip ospf message-digest-key 1 md5 m3n4o5p6
+!
+interface Ethernet1/3
+ ip address 192.168.37.1 255.255.255.0
+ ip ospf hello-interval 57913
+ ip ospf dead-interval 53124
+ ip ospf cost 3700
+ ip ospf retransmit-interval 55000
+ ip ospf message-digest-key 1 md5 q7r8s9t0
+!
+interface Serial2/0
+ ip address 192.168.38.1 255.255.255.0
+ ip ospf hello-interval 68024
+ ip ospf dead-interval 64235
+ ip ospf cost 3800
+ ip ospf retransmit-interval 65000
+ ip ospf message-digest-key 1 md5 u1v2w3x4
+!
+interface Serial2/1
+ ip address 192.168.39.1 255.255.255.0
+ ip ospf hello-interval 79135
+ ip ospf dead-interval 75346
+ ip ospf cost 3900
+ ip ospf retransmit-interval 75000
+ ip ospf message-digest-key 1 md5 y5z6a7b8
+!
+interface Serial2/2
+ ip address 192.168.40.1 255.255.255.0
+ ip ospf hello-interval 80246
+ ip ospf dead-interval 86457
+ ip ospf cost 4000
+ ip ospf retransmit-interval 85000
+ ip ospf message-digest-key 1 md5 c9d0e1f2
+!
+interface FastEthernet0/0.181
+ encapsulation dot1Q 181
+ ip address 192.168.91.1 255.255.255.0
+!
+interface FastEthernet0/0.182
+ encapsulation dot1Q 182
+ ip address 192.168.92.1 255.255.255.0
+!
+interface FastEthernet0/0.183
+ encapsulation dot1Q 183
+ ip address 192.168.93.1 255.255.255.0
+!
+interface FastEthernet0/0.184
+ encapsulation dot1Q 184
+ ip address 192.168.94.1 255.255.255.0
+!
+interface FastEthernet0/0.185
+ encapsulation dot1Q 185
+ ip address 192.168.95.1 255.255.255.0
+!
+interface FastEthernet0/0.186
+ encapsulation dot1Q 186
+ ip address 192.168.96.1 255.255.255.0
+!
+interface FastEthernet0/0.187
+ encapsulation dot1Q 187
+ ip address 192.168.97.1 255.255.255.0
+!
+interface FastEthernet0/0.188
+ encapsulation dot1Q 188
+ ip address 192.168.98.1 255.255.255.0
+!
+interface FastEthernet0/0.189
+ encapsulation dot1Q 189
+ ip address 192.168.99.1 255.255.255.0
+!
+interface FastEthernet0/0.190
+ encapsulation dot1Q 190
+ ip address 192.168.100.1 255.255.255.0
+!
+router ospf 5
+ router-id 5.5.5.5
+ network 192.168.33.0 0.0.0.255 area 0
+ network 192.168.34.0 0.0.0.255 area 1
+ network 192.168.35.0 0.0.0.255 area 1
+ network 192.168.36.0 0.0.0.255 area 2
+ network 192.168.37.0 0.0.0.255 area 2
+ network 192.168.38.0 0.0.0.255 area 3
+ network 192.168.39.0 0.0.0.255 area 3
+ network 192.168.40.0 0.0.0.255 area 4
+ area 0 authentication message-digest
+ area 1 authentication message-digest
+ area 2 authentication message-digest
+ area 3 authentication message-digest
+ area 4 authentication message-digest
+ default-information originate always
+!
+router eigrp 100
+ router-id 5.5.5.5
+ metric weights 0 1 1 1 1 1
+ distance eigrp 20 200
+ passive-interface Ethernet1/4
+ log-neighbor-warnings 33333
+ maximum-paths 30
+ variance 40
+ eigrp log-neighbor-changes
+ neighbor 192.168.9.2 FastEthernet0/0.181
+ neighbor 192.168.9.3 FastEthernet0/0.182
+ neighbor 192.168.9.4 FastEthernet0/0.183
+ neighbor 192.168.9.5 FastEthernet0/0.184
+ redistribute ospf 5
+!
+router rip
+ version 2
+ no auto-summary
+ network 192.168.37.0
+ network 192.168.38.0
+ network 192.168.39.0
+ network 192.168.40.0
+ network 192.168.41.0
+ passive-interface Ethernet1/1
+ passive-interface Serial2/0
+ neighbor 192.168.38.2
+ neighbor 192.168.39.3
+ distance 160
+ key-chain rip-auth
+!
+key chain rip-auth
+ key 1
+  key-string cisco
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+service password-encryption
+line vty 0 4
+ exec-timeout 10 0
+ transport input ssh
+ access-class 10 in
+ login authentication EXEC-LIST
+line aux 0
+ login authentication LOGIN-LIST
+!
+end
+```

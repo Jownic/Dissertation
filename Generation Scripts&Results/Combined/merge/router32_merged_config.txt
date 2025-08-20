@@ -1,0 +1,178 @@
+```plaintext
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R32
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ ip address 192.168.10.1 255.255.255.0
+ ip ospf hello-interval 20000
+ ip ospf retransmit-interval 15000
+ ip ospf cost 150
+ ip ospf lls
+ ip hello-interval eigrp 100 25000
+ ip hold-time eigrp 100 40000
+ no shutdown
+!
+interface Ethernet1/0
+ ip address 192.168.6.1 255.255.255.0
+ ip ospf hello-interval 25000
+ ip ospf retransmit-interval 20000
+ ip ospf cost 250
+ ip ospf lls
+ no shutdown
+!
+interface Serial2/1
+ ip address 192.168.7.1 255.255.255.0
+ ip ospf hello-interval 30000
+ ip ospf retransmit-interval 25000
+ ip ospf cost 350
+ ip ospf lls
+ ip address 192.168.16.1 255.255.255.0
+ no shutdown
+!
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.61.1 255.255.255.0
+!
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.62.1 255.255.255.0
+!
+interface FastEthernet0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.63.1 255.255.255.0
+!
+interface FastEthernet0/0.40
+ encapsulation dot1Q 40
+ ip address 192.168.64.1 255.255.255.0
+!
+interface FastEthernet0/0.50
+ encapsulation dot1Q 50
+ ip address 192.168.65.1 255.255.255.0
+!
+interface FastEthernet0/0.60
+ encapsulation dot1Q 60
+ ip address 192.168.66.1 255.255.255.0
+!
+interface FastEthernet0/0.70
+ encapsulation dot1Q 70
+ ip address 192.168.67.1 255.255.255.0
+!
+interface FastEthernet0/0.80
+ encapsulation dot1Q 80
+ ip address 192.168.68.1 255.255.255.0
+!
+interface FastEthernet0/0.90
+ encapsulation dot1Q 90
+ ip address 192.168.69.1 255.255.255.0
+!
+interface FastEthernet0/0.100
+ encapsulation dot1Q 100
+ ip address 192.168.70.1 255.255.255.0
+!
+interface FastEthernet0/0.110
+ encapsulation dot1Q 110
+ ip address 192.168.71.1 255.255.255.0
+!
+interface FastEthernet0/0.120
+ encapsulation dot1Q 120
+ ip address 192.168.72.1 255.255.255.0
+!
+interface FastEthernet0/0.130
+ encapsulation dot1Q 130
+ ip address 192.168.73.1 255.255.255.0
+!
+interface FastEthernet0/0.140
+ encapsulation dot1Q 140
+ ip address 192.168.74.1 255.255.255.0
+!
+interface FastEthernet0/0.150
+ encapsulation dot1Q 150
+ ip address 192.168.75.1 255.255.255.0
+!
+interface FastEthernet0/0.160
+ encapsulation dot1Q 160
+ ip address 192.168.76.1 255.255.255.0
+!
+interface FastEthernet0/0.170
+ encapsulation dot1Q 170
+ ip address 192.168.77.1 255.255.255.0
+!
+interface FastEthernet0/0.180
+ encapsulation dot1Q 180
+ ip address 192.168.78.1 255.255.255.0
+!
+interface FastEthernet0/0.190
+ encapsulation dot1Q 190
+ ip address 192.168.79.1 255.255.255.0
+!
+interface FastEthernet0/0.200
+ encapsulation dot1Q 200
+ ip address 192.168.80.1 255.255.255.0
+!
+router ospf 1
+ router-id 2.2.2.2
+ network 192.168.5.0 0.0.0.255 area 0
+ network 192.168.6.0 0.0.0.255 area 1
+ network 192.168.7.0 0.0.0.255 area 1
+ passive-interface Ethernet1/0
+ auto-cost reference-bandwidth 2000000
+ area 1 authentication message-digest
+ timers throttle spf 2000 10000 40000
+ redistribute eigrp 100 subnets
+!
+router eigrp 100
+ router-id 2.2.2.2
+ metric weights 0 1 1 1 1 1
+ distance eigrp 220 140
+ redistribute ospf 1
+ passive-interface Ethernet1/0
+ maximum-paths 15
+ variance 3
+ eigrp log-neighbor-changes
+ neighbor 192.168.3.2 Ethernet1/0
+ neighbor 192.168.4.2 Serial2/1
+ neighbor 192.168.3.3 Ethernet1/0
+ neighbor 192.168.4.3 Serial2/1
+!
+router rip
+ version 2
+ network 192.168.10.0
+ network 192.168.11.0
+ network 192.168.12.0
+ network 192.168.13.0
+ network 192.168.14.0
+ network 192.168.15.0
+ network 192.168.16.0
+ network 192.168.17.0
+ network 192.168.18.0
+ no auto-summary
+!
+aaa new-model
+aaa authentication login LOGIN-LIST group tacacs+ local
+aaa authentication enable default group tacacs+ enable
+aaa accounting connection CONN-ACC start-stop group tacacs+
+aaa authorization exec EXEC-LIST group tacacs+
+aaa accounting exec EXEC-ACC start-stop group tacacs+
+aaa accounting network NET-ACC start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+aaa accounting vrrs default start-stop group tacacs+
+aaa accounting delay-start
+!
+ip radius source-interface FastEthernet0/0
+!
+banner login ^C
+Welcome to my C7200
+^C
+!
+end
+```

@@ -1,0 +1,41 @@
+plaintext
+!
+!
+!
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R28
+!
+ip cef
+no ip domain-lookup
+no ip icmp rate-limit unreachable
+ip tcp synwait 5
+no cdp log mismatch duplex
+!
+interface FastEthernet0/0
+ no ip address
+!
+interface Ethernet1/0
+ no ip address
+!
+interface Ethernet1/1
+ no ip address
+!
+interface Ethernet1/2
+ no ip address
+!
+interface Ethernet1/3
+ no ip address
+!
+interface Serial2/0
+ no ip address
+!
+interface Serial2/1
+ no ip address
+!
+interface Serial2/2
+ no ip address
+!
+interface Serial2/3
