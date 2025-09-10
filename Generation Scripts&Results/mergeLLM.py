@@ -8,7 +8,7 @@ from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
 from openai import OpenAI, RateLimitError
 
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "{INSERT OPEN API KEY HERE}"
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # ─── Configuration ───────────────────────────────────────────────────────────

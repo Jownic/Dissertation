@@ -31,8 +31,8 @@ extensions = [
 ]
 
 # ─── 0) Boilerplate: load PDFs, chunk, embed, build FAISS (your existing code) ──
-os.environ["OPENAI_API_KEY"] = "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"
-client = OpenAI(api_key=os.getenv("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"))
+os.environ["OPENAI_API_KEY"] = "{INSERT OPEN API KEY HERE}"
+client = OpenAI(api_key=os.getenv("{INSERT OPEN API KEY HERE}"))
 folder = Path(r"Z:\Thesis\AConfig Guides\EIGRP")
 raw_texts = []
 for pdf in folder.rglob("ire-15-s-book.pdf"):
